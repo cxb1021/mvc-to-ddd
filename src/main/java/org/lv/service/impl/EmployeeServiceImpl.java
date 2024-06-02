@@ -7,12 +7,14 @@ import org.lv.exception.ServiceResException;
 import org.lv.model.Address;
 import org.lv.model.EmpStatus;
 import org.lv.model.Employee;
+import org.lv.model.dto.UpdateEmployeeDto;
 import org.lv.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -30,6 +32,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (!Arrays.asList(EmpStatus.PROBATION, EmpStatus.REGULAR, EmpStatus.TERMINATED).contains(status)) {
             throw new ServiceResException("状态不对");
         }
+        if (!address.getProvince().equals("四川")) {
+            throw new ServiceResException("只能是四川的");
+        }
+
         Employee employee = employeeDao.selectByName(name);
         if (employee != null) {
             throw new ServiceResException("用户已存在");
@@ -42,6 +48,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employeeDao.insert(newEmployee);
         return employeeDao.selectByName(name);
+    }
+
+    @Override
+    public Employee update(UpdateEmployeeDto updateEmployeeDto) {
+        String id = updateEmployeeDto.getId();
+        EmpStatus status = updateEmployeeDto.getStatus();
+        Address address = updateEmployeeDto.getAddress();
+
+        if (!Arrays.asList(EmpStatus.PROBATION, EmpStatus.REGULAR, EmpStatus.TERMINATED).contains(status)) {
+            throw new ServiceResException("状态不对");
+        }
+        if (Objects.nonNull(address) && !address.getProvince().equals("四川")) {
+            throw new ServiceResException("只能是四川的");
+        }
+
+        if (Objects.isNull(employeeDao.selectById(id))) {
+            throw new ServiceResException("用户不存在");
+        }
+
+        Employee updatedEmployee = new Employee();
+        updatedEmployee.setId(id);
+        updatedEmployee.setAddress(address);
+        updatedEmployee.setStatus(status);
+
+        return employeeDao.save(updatedEmployee);
     }
 
     @Override

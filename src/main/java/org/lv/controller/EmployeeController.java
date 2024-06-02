@@ -2,6 +2,7 @@ package org.lv.controller;
 
 import org.lv.model.dto.CreateEmployeeDto;
 import org.lv.model.Employee;
+import org.lv.model.dto.UpdateEmployeeDto;
 import org.lv.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,11 @@ public class EmployeeController {
     @PostMapping
     public Employee createEmployee(@RequestBody CreateEmployeeDto createEmployeeDto) {
         return employeeService.create(createEmployeeDto);
+    }
+
+    @PutMapping
+    public Employee update(@RequestBody UpdateEmployeeDto updateEmployeeDto) {
+        return employeeService.update(updateEmployeeDto);
     }
 
     @GetMapping("/all")
