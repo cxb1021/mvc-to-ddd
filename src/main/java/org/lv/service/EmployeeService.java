@@ -6,7 +6,7 @@ import org.lv.model.Employee;
 import java.util.List;
 
 public interface EmployeeService {
-    public Employee create(CreateEmployeeDto createEmployeeDto);
+    Employee create(CreateEmployeeDto createEmployeeDto);
 
-    public List<Employee> findAll();
+    List<Employee> findAll();
 }

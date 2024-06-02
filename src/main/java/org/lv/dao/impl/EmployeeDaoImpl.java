@@ -18,11 +18,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public Employee selectById(String id) {
-        return employeeList.stream().filter(employee -> employee.getId().equals(id)).findFirst().orElse(null);
-    }
-
-    @Override
     public Employee selectByName(String name) {
         return employeeList.stream().filter(employee -> employee.getName().equals(name)).findFirst().orElse(null);
     }

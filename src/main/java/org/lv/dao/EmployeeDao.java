@@ -5,11 +5,9 @@ import org.lv.model.Employee;
 import java.util.List;
 
 public interface EmployeeDao {
-    public void insert(Employee employee);
+    void insert(Employee employee);
 
-    public Employee selectById(String id);
+    Employee selectByName(String name);
 
-    public Employee selectByName(String name);
-
-    public List<Employee> selectAll();
+    List<Employee> selectAll();
 }
