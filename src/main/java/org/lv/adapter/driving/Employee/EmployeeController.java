@@ -1,7 +1,7 @@
-package org.lv.controller;
+package org.lv.adapter.driving.Employee;
 
-import org.lv.model.dto.CreateEmployeeDto;
 import org.lv.model.Employee;
+import org.lv.model.dto.CreateEmployeeDto;
 import org.lv.model.dto.UpdateWorkExperience;
 import org.lv.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class EmployeeController {
         return employeeService.create(createEmployeeDto);
     }
 
-    @PutMapping
+    @PutMapping()
     public Employee update(@RequestBody UpdateWorkExperience updateWorkExperience) {
         return employeeService.update(updateWorkExperience);
     }

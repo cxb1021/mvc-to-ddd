@@ -7,7 +7,7 @@ import org.lv.exception.ServiceResException;
 import org.lv.model.Address;
 import org.lv.model.EmpStatus;
 import org.lv.model.Employee;
-import org.lv.model.dto.UpdateEmployeeDto;
+import org.lv.model.dto.UpdateWorkExperience;
 import org.lv.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,10 +51,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee update(UpdateEmployeeDto updateEmployeeDto) {
-        String id = updateEmployeeDto.getId();
-        EmpStatus status = updateEmployeeDto.getStatus();
-        Address address = updateEmployeeDto.getAddress();
+    public Employee update(UpdateWorkExperience updateWorkExperience) {
+        String id = updateWorkExperience.getId();
+        EmpStatus status = updateWorkExperience.getStatus();
+        Address address = updateWorkExperience.getAddress();
 
         if (!Arrays.asList(EmpStatus.PROBATION, EmpStatus.REGULAR, EmpStatus.TERMINATED).contains(status)) {
             throw new ServiceResException("状态不对");
