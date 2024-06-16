@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -12,6 +14,5 @@ import lombok.Setter;
 public class Employee {
     private String id;
     private String name;
-    private Address address;
-    private EmpStatus status;
+    private List<WorkExperience> workExperiences;
 }
