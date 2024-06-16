@@ -4,13 +4,12 @@ import org.lv.dao.EmployeeDao;
 import org.lv.model.Employee;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class EmployeeDaoImpl implements EmployeeDao {
-    private final List<Employee> employeeList = new ArrayList<>();
+    private List<Employee> employeeList = new ArrayList<>();
 
     @Override
     public void insert(Employee employee) {
@@ -25,7 +24,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public Employee selectById(String id) {
-        return employeeList.stream().filter(employee -> employee.getId().equals(id)).findFirst().orElse(null);
+        Employee foundEmployee = employeeList.stream().filter(employee -> employee.getId().equals(id)).findFirst().orElse(null);
+        if (Objects.nonNull(foundEmployee) && Objects.isNull(foundEmployee.getWorkExperiences())) {
+            foundEmployee.setWorkExperiences(new ArrayList<>());
+        }
+        return foundEmployee;
     }
 
     @Override
@@ -34,18 +37,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public Employee save(Employee updatedDmployee) {
-        employeeList.forEach(employee -> {
-            if (employee.getId().equals(updatedDmployee.getId())) {
-                if (Objects.nonNull(updatedDmployee.getAddress())) {
-                    employee.setAddress(updatedDmployee.getAddress());
-                }
-                if (Objects.nonNull(updatedDmployee.getStatus())) {
-                    employee.setStatus(updatedDmployee.getStatus());
-                }
-            }
-        });
-
-        return selectById(updatedDmployee.getId());
+    public Employee save(Employee updatedDemployee) {
+        employeeList = employeeList.stream().map(employee -> employee.getId().equals(updatedDemployee.getId()) ? updatedDemployee : employee).toList();
+        return selectById(updatedDemployee.getId());
     }
 }

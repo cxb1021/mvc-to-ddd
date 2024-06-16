@@ -3,7 +3,9 @@ package org.lv.service.impl;
 import cn.hutool.core.util.StrUtil;
 import org.lv.dao.EmployeeDao;
 import org.lv.model.Employee;
+import org.lv.model.WorkExperience;
 import org.lv.model.dto.CreateEmployeeDto;
+import org.lv.model.dto.UpdateEmployeeDto;
 import org.lv.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,26 +41,23 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee update(UpdateEmployeeDto updateEmployeeDto) {
         String id = updateEmployeeDto.getId();
-        EmpStatus status = updateEmployeeDto.getStatus();
-        Address address = updateEmployeeDto.getAddress();
+        WorkExperience updatedWorkExperience = updateEmployeeDto.getWorkExperience();
+        Employee employee = employeeDao.selectById(id);
 
-        if (!Arrays.asList(EmpStatus.PROBATION, EmpStatus.REGULAR, EmpStatus.TERMINATED).contains(status)) {
-            throw new ServiceResException("状态不对");
-        }
-        if (Objects.nonNull(address) && !address.getProvince().equals("四川")) {
-            throw new ServiceResException("只能是四川的");
+        if (Objects.isNull(employee)) {
+            throw new RuntimeException("用户不存在");
         }
 
-        if (Objects.isNull(employeeDao.selectById(id))) {
-            throw new ServiceResException("用户不存在");
+        if (Objects.nonNull(updatedWorkExperience)) {
+            employee.getWorkExperiences().forEach(workExperience -> {
+                if (workExperience.overlap(updatedWorkExperience)) {
+                    throw new RuntimeException("经验时间段不能重复");
+                }
+            });
         }
+        employee.getWorkExperiences().add(updatedWorkExperience);
 
-        Employee updatedEmployee = new Employee();
-        updatedEmployee.setId(id);
-        updatedEmployee.setAddress(address);
-        updatedEmployee.setStatus(status);
-
-        return employeeDao.save(updatedEmployee);
+        return employeeDao.save(employee);
     }
 
     @Override
