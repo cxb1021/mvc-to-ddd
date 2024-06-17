@@ -27,4 +27,9 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         employeeList.add(employee);
         return employee;
     }
+
+    @Override
+    public List<Employee> findAll() {
+        return employeeList;
+    }
 }

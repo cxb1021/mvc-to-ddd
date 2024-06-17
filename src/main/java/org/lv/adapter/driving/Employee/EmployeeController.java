@@ -1,9 +1,10 @@
 package org.lv.adapter.driving.Employee;
 
-import org.lv.model.Employee;
-import org.lv.model.dto.CreateEmployeeDto;
-import org.lv.model.dto.UpdateWorkExperience;
-import org.lv.service.EmployeeService;
+import org.lv.application.employee.command.EmployeeApplicationService;
+import org.lv.application.employee.command.AddWorkExperienceCommand;
+import org.lv.application.employee.command.CreateEmployeeCommand;
+import org.lv.application.employee.query.EmployeeQueryApplicationService;
+import org.lv.domain.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,20 +14,23 @@ import java.util.List;
 @RequestMapping("/employee")
 public class EmployeeController {
     @Autowired
-    private EmployeeService employeeService;
+    private EmployeeApplicationService employeeApplicationService;
+
+    @Autowired
+    private EmployeeQueryApplicationService employeeQueryApplicationService;
 
     @PostMapping
-    public Employee createEmployee(@RequestBody CreateEmployeeDto createEmployeeDto) {
-        return employeeService.create(createEmployeeDto);
+    public Employee createEmployee(@RequestBody CreateEmployeeCommand createEmployeeCommand) {
+        return employeeApplicationService.create(createEmployeeCommand);
     }
 
     @PutMapping()
-    public Employee update(@RequestBody UpdateWorkExperience updateWorkExperience) {
-        return employeeService.update(updateWorkExperience);
+    public Employee update(@RequestBody AddWorkExperienceCommand addWorkExperienceCommand) {
+        return employeeApplicationService.addWorkExperience(addWorkExperienceCommand);
     }
 
     @GetMapping("/all")
     public List<Employee> queryAll() {
-        return employeeService.findAll();
+        return employeeQueryApplicationService.findAll();
     }
 }

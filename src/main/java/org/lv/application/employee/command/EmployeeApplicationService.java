@@ -1,6 +1,7 @@
-package org.lv.application.employee;
+package org.lv.application.employee.command;
 
 import cn.hutool.core.util.StrUtil;
+import org.lv.application.employee.command.AddWorkExperienceCommand;
 import org.lv.application.employee.command.CreateEmployeeCommand;
 import org.lv.domain.Employee;
 import org.lv.domain.EmployeeRepository;
@@ -25,6 +26,16 @@ public class EmployeeApplicationService {
         if (Objects.nonNull(existEmployee)) {
             throw new RuntimeException("用户已存在");
         }
+
+        return employeeRepository.save(employee);
+    }
+
+    public Employee addWorkExperience(AddWorkExperienceCommand addWorkExperienceCommand) {
+        Employee employee = employeeRepository.findById(addWorkExperienceCommand.getId());
+        if (Objects.isNull(employee)) {
+            throw new RuntimeException("用户不存在");
+        }
+        employee.addExperience(addWorkExperienceCommand.getWorkExperience());
 
         return employeeRepository.save(employee);
     }
