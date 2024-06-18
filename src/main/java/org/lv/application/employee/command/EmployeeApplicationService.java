@@ -1,8 +1,6 @@
 package org.lv.application.employee.command;
 
 import cn.hutool.core.util.StrUtil;
-import org.lv.application.employee.command.AddWorkExperienceCommand;
-import org.lv.application.employee.command.CreateEmployeeCommand;
 import org.lv.domain.Employee;
 import org.lv.domain.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ public class EmployeeApplicationService {
             throw new RuntimeException("名称不能为空");
         }
 
-        Employee existEmployee = employeeRepository.findByName(employee.getName())
+        Employee existEmployee = employeeRepository.findByName(employee.getName());
         if (Objects.nonNull(existEmployee)) {
             throw new RuntimeException("用户已存在");
         }

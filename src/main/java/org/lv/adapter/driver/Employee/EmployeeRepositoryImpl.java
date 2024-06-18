@@ -6,10 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Repository
 public class EmployeeRepositoryImpl implements EmployeeRepository {
-    private final List<Employee> employeeList = new ArrayList<>();
+    private List<Employee> employeeList = new ArrayList<>();
 
     @Override
     public Employee findById(String id) {
@@ -23,8 +25,18 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public Employee save(Employee employee) {
-        employee.setId(String.valueOf(employeeList.size()));
-        employeeList.add(employee);
+        if (Objects.isNull(employee.getId())) {
+            employee.setId(String.valueOf(employeeList.size()));
+            employeeList.add(employee);
+        } else {
+            employeeList = employeeList.stream()
+                    .map(employee1 -> {
+                        if (employee1.getId().equals(employee.getId())) {
+                            return employee;
+                        }
+                        return employee1;
+                    }).collect(Collectors.toList());
+        }
         return employee;
     }
 

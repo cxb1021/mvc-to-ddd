@@ -24,8 +24,8 @@ public class EmployeeController {
         return employeeApplicationService.create(createEmployeeCommand);
     }
 
-    @PutMapping()
-    public Employee update(@RequestBody AddWorkExperienceCommand addWorkExperienceCommand) {
+    @PutMapping("addWorkExperience")
+    public Employee addWorkExperience(@RequestBody AddWorkExperienceCommand addWorkExperienceCommand) {
         return employeeApplicationService.addWorkExperience(addWorkExperienceCommand);
     }
 
