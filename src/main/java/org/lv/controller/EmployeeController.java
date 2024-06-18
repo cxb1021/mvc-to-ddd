@@ -21,8 +21,8 @@ public class EmployeeController {
     }
 
     @PutMapping
-    public Employee update(@RequestBody UpdateEmployeeDto updateEmployeeDto) {
-        return employeeService.update(updateEmployeeDto);
+    public Employee addWorkExperience(@RequestBody UpdateEmployeeDto updateEmployeeDto) {
+        return employeeService.addWorkExperience(updateEmployeeDto);
     }
 
     @GetMapping("/all")

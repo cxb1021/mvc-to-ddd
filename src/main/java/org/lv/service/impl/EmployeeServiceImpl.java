@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import org.lv.dao.EmployeeDao;
 import org.lv.model.Employee;
 import org.lv.model.WorkExperience;
+import org.lv.model.dto.AddWorkExperienceDto;
 import org.lv.model.dto.CreateEmployeeDto;
 import org.lv.model.dto.UpdateEmployeeDto;
 import org.lv.service.EmployeeService;
@@ -39,7 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee update(UpdateEmployeeDto updateEmployeeDto) {
+    public Employee addWorkExperience(AddWorkExperienceDto addWorkExperience) {
         String id = updateEmployeeDto.getId();
         WorkExperience updatedWorkExperience = updateEmployeeDto.getWorkExperience();
         Employee employee = employeeDao.selectById(id);

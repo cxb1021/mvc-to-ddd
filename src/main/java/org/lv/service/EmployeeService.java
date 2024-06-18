@@ -9,7 +9,7 @@ import java.util.List;
 public interface EmployeeService {
     Employee create(CreateEmployeeDto createEmployeeDto);
 
-    Employee update(UpdateEmployeeDto updateEmployeeDto);
+    Employee addWorkExperience(UpdateEmployeeDto updateEmployeeDto);
 
     List<Employee> findAll();
 }
