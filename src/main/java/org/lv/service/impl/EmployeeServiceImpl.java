@@ -3,10 +3,8 @@ package org.lv.service.impl;
 import cn.hutool.core.util.StrUtil;
 import org.lv.dao.EmployeeDao;
 import org.lv.model.Employee;
-import org.lv.model.WorkExperience;
 import org.lv.model.dto.AddWorkExperienceDto;
 import org.lv.model.dto.CreateEmployeeDto;
-import org.lv.model.dto.UpdateEmployeeDto;
 import org.lv.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,22 +39,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addWorkExperience(AddWorkExperienceDto addWorkExperience) {
-        String id = updateEmployeeDto.getId();
-        WorkExperience updatedWorkExperience = updateEmployeeDto.getWorkExperience();
+        String id = addWorkExperience.getId();
         Employee employee = employeeDao.selectById(id);
 
         if (Objects.isNull(employee)) {
             throw new RuntimeException("用户不存在");
         }
 
-        if (Objects.nonNull(updatedWorkExperience)) {
-            employee.getWorkExperiences().forEach(workExperience -> {
-                if (workExperience.overlap(updatedWorkExperience)) {
-                    throw new RuntimeException("经验时间段不能重复");
-                }
-            });
-        }
-        employee.getWorkExperiences().add(updatedWorkExperience);
+        employee.getWorkExperiences().forEach(workExperience -> {
+            if (workExperience.overlap(addWorkExperience.getWorkExperience())) {
+                throw new RuntimeException("经验时间段不能重复");
+            }
+        });
+        employee.getWorkExperiences().add(addWorkExperience.getWorkExperience());
 
         return employeeDao.save(employee);
     }

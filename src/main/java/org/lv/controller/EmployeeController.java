@@ -1,8 +1,8 @@
 package org.lv.controller;
 
-import org.lv.model.dto.CreateEmployeeDto;
 import org.lv.model.Employee;
-import org.lv.model.dto.UpdateEmployeeDto;
+import org.lv.model.dto.AddWorkExperienceDto;
+import org.lv.model.dto.CreateEmployeeDto;
 import org.lv.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +20,9 @@ public class EmployeeController {
         return employeeService.create(createEmployeeDto);
     }
 
-    @PutMapping
-    public Employee addWorkExperience(@RequestBody UpdateEmployeeDto updateEmployeeDto) {
-        return employeeService.addWorkExperience(updateEmployeeDto);
+    @PutMapping("/addWorkExperience")
+    public Employee addWorkExperience(@RequestBody AddWorkExperienceDto addWorkExperienceDto) {
+        return employeeService.addWorkExperience(addWorkExperienceDto);
     }
 
     @GetMapping("/all")
