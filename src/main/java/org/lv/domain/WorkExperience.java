@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.lv.common.framework.ValueObject;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class WorkExperience implements ValueObject {
     @JsonFormat(pattern = "yyyy-MM-dd")
