@@ -46,12 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new RuntimeException("用户不存在");
         }
 
-        employee.getWorkExperiences().forEach(workExperience -> {
-            if (workExperience.overlap(addWorkExperience.getWorkExperience())) {
-                throw new RuntimeException("经验时间段不能重复");
-            }
-        });
-        employee.getWorkExperiences().add(addWorkExperience.getWorkExperience());
+        // 经验时间段不能重复
 
         return employeeDao.save(employee);
     }
